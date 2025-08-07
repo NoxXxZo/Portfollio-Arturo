@@ -65,7 +65,36 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".prev").addEventListener("click", showPrevSlide);
 
   // Automático cada 5 segundos
-  setInterval(showNextSlide, 5000);
+  let autoplayInterval;
+
+  function startAutoplay() {
+    if (!autoplayInterval) {
+      autoplayInterval = setInterval(showNextSlide, intervalTime);
+    }
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+    autoplayInterval = null;
+  }
+
+  // Iniciar automáticamente
+  startAutoplay();
+
+  // Pausar al pasar el mouse por encima del slider
+  const sliderContainer = document.querySelector(".slider-container");
+
+  sliderContainer.addEventListener("mouseenter", () => {
+    if (lightbox.style.display !== "flex") {
+      stopAutoplay();
+    }
+  });
+
+  sliderContainer.addEventListener("mouseleave", () => {
+    if (lightbox.style.display !== "flex") {
+      startAutoplay();
+    }
+  });
 
   // Iniciar en el primer slide
   updateSliderPosition();
@@ -74,25 +103,69 @@ document.addEventListener("DOMContentLoaded", () => {
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const closeBtn = document.querySelector(".close");
+  const lightboxPrev = document.querySelector(".lightbox-prev");
+  const lightboxNext = document.querySelector(".lightbox-next");
 
-  const slideImgs = document.querySelectorAll(".slide");
+  //const slides = document.querySelectorAll(".slide");
+  let currentLightboxIndex = 0;
 
-  slideImgs.forEach((img) => {
+  // Abrir imagen en grande
+  slides.forEach((img, index) => {
     img.addEventListener("click", () => {
-      lightbox.style.display = "flex";
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
+      currentLightboxIndex = index;
+      openLightbox();
     });
   });
 
-  closeBtn.addEventListener("click", () => {
+  function openLightbox() {
+    lightbox.style.display = "flex";
+    const img = slides[currentLightboxIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+
+    stopAutoplay(); // Detener el autoplay del slider al abrir el lightbox
+  }
+
+  function closeLightbox() {
     lightbox.style.display = "none";
+
+    startAutoplay(); // Reiniciar el autoplay del slider al cerrar el lightbox
+  }
+
+  function showPrevLightboxImage() {
+    currentLightboxIndex =
+      (currentLightboxIndex - 1 + slides.length) % slides.length;
+    openLightbox();
+  }
+
+  function showNextLightboxImage() {
+    currentLightboxIndex = (currentLightboxIndex + 1) % slides.length;
+    openLightbox();
+  }
+
+  closeBtn.addEventListener("click", closeLightbox);
+  lightboxPrev.addEventListener("click", (e) => {
+    e.stopPropagation(); // evitar cerrar el lightbox
+    showPrevLightboxImage();
+  });
+  lightboxNext.addEventListener("click", (e) => {
+    e.stopPropagation();
+    showNextLightboxImage();
   });
 
-  // Cerrar al hacer clic fuera de la imagen
+  // Cerrar si se hace clic fuera de la imagen
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) {
-      lightbox.style.display = "none";
+      closeLightbox();
+    }
+  });
+
+  // También permitir navegación con teclado
+  document.addEventListener("keydown", (e) => {
+    if (lightbox.style.display === "flex") {
+      if (e.key === "ArrowRight") showNextLightboxImage();
+      if (e.key === "ArrowLeft") showPrevLightboxImage();
+      if (e.key === "Escape") closeLightbox();
     }
   });
 });
