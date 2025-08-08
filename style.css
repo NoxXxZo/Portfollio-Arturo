@@ -471,3 +471,18 @@ html {
 .dot.active {
   background-color: #333;
 }
+.imagen-portada {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent; /* sin franjas negras */
+}
+
+.imagen-portada img {
+  width: auto;
+  height: auto; /* mantiene proporción natural */
+  object-fit: cover; /* llena el ancho y mantiene estética */
+  display: block;
+}
