@@ -137,7 +137,7 @@ header {
 
 .grid .card img {
   width: 100%;
-  height: 200px;
+  height: 260px;
   object-fit: cover;
   display: block;
 }
@@ -485,4 +485,22 @@ html {
   height: auto; /* mantiene proporción natural */
   object-fit: cover; /* llena el ancho y mantiene estética */
   display: block;
+}
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* Proporción 16:9 */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  background: #000; /* Fondo negro mientras carga */
+  border-radius: 10px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
