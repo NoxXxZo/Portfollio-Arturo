@@ -9,6 +9,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const slider = document.querySelector(".slider");
   const intervalTime = 5000; // 5 segundos
 
+  // ===== Crear los puntos =====
+  const dotsContainer = document.querySelector(".dots-container");
+
+  slides.forEach((_, index) => {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    if (index === 0) dot.classList.add("active"); // primer punto activo
+    dot.addEventListener("click", () => {
+      currentIndex = index;
+      updateSliderPosition();
+      updateDots();
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll(".dot");
+
+  // ===== Función para actualizar los puntos activos =====
+  function updateDots() {
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentIndex);
+    });
+  }
+
   if (menuToggle && navLinks) {
     menuToggle.addEventListener("click", () => {
       navLinks.classList.toggle("active");
@@ -49,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateSliderPosition() {
     const offset = -currentIndex * 100;
     slider.style.transform = `translateX(${offset}%)`;
+    updateDots(); // Actualizar puntos activos
   }
 
   function showNextSlide() {
