@@ -163,6 +163,13 @@ footer {
   font-size: 0.9rem;
 }
 
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .menu-toggle {
@@ -189,14 +196,6 @@ footer {
   .nav-links li {
     padding: 0.5rem 0;
   }
-}
-
-.menu-toggle {
-  display: none;
-  font-size: 1.8rem;
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
 .project-image {
