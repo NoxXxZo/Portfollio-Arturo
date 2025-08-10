@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const slides = document.querySelectorAll(".slide");
   const totalSlides = slides.length;
   const slider = document.querySelector(".slider");
-  const intervalTime = 5000; // 5 segundos
+  const intervalTime = 3000; // 3 segundos
 
   // ===== Crear los puntos =====
   const dotsContainer = document.querySelector(".dots-container");
@@ -182,10 +182,12 @@ document.addEventListener("DOMContentLoaded", () => {
   lightboxPrev.addEventListener("click", (e) => {
     e.stopPropagation(); // evitar cerrar el lightbox
     showPrevLightboxImage();
+    showPrevSlide();
   });
   lightboxNext.addEventListener("click", (e) => {
     e.stopPropagation();
     showNextLightboxImage();
+    showNextSlide();
   });
 
   // Cerrar si se hace clic fuera de la imagen
@@ -203,6 +205,41 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Escape") closeLightbox();
     }
   });
+  // --- Swipe en Lightbox para móviles ---
+  if (window.innerWidth <= 768) {
+    const lightbox = document.getElementById("lightbox");
+    let startXLightbox = 0;
+    let endXLightbox = 0;
+
+    lightbox.addEventListener("touchstart", (e) => {
+      startXLightbox = e.touches[0].clientX;
+    });
+
+    lightbox.addEventListener("touchend", (e) => {
+      endXLightbox = e.changedTouches[0].clientX;
+      handleLightboxSwipe();
+    });
+
+    function handleLightboxSwipe() {
+      let swipeDistance = endXLightbox - startXLightbox;
+
+      if (Math.abs(swipeDistance) > 50) {
+        // distancia mínima para contar como swipe
+        if (swipeDistance > 0) {
+          // Deslizó a la derecha → imagen anterior
+          showPrevSlide();
+          showPrevLightboxImage();
+        } else {
+          // Deslizó a la izquierda → imagen siguiente
+          showNextSlide();
+          showNextLightboxImage();
+        }
+        resetAutoplay(); // si quieres que reinicie autoplay
+      }
+    }
+  }
+  //fin swipe lightbox moviles
+
   // ===== Swipe solo en móviles =====
   // ===== Swipe solo en móviles (fix iOS mejorado) =====
   if (window.innerWidth <= 768) {
