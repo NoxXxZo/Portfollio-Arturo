@@ -35,12 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (menuToggle && navLinks) {
     menuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
+      navLinks.classList.toggle("active"); //mostrar/ocultar menú
+      menuToggle.classList.toggle("open"); // animación de menú
     });
 
     document.querySelectorAll(".nav-links a").forEach((link) => {
       link.addEventListener("click", () => {
         navLinks.classList.remove("active");
+        menuToggle.classList.remove("open"); // cerrar menú al hacer clic en un enlace
       });
     });
   }

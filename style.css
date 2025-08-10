@@ -165,15 +165,36 @@ footer {
 
 .menu-toggle {
   display: none;
+  flex-direction: column;
+  justify-content: space-between;
   font-size: 1.8rem;
   background: none;
   border: none;
   cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s ease;
+}
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  background: #333;
+  border-radius: 3px;
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+/* Estado abierto: líneas verticales */
+.menu-toggle.open {
+  transform: rotate(90deg); /* rota todo el icono */
+}
+
+/* Animación de cada línea para darle efecto */
+.menu-toggle.open span {
+  width: 3px; /* más delgado en ancho */
+  height: 20px; /* se hace vertical */
 }
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .menu-toggle {
-    display: block;
+    display: flex;
     color: #333;
   }
 
@@ -181,16 +202,24 @@ footer {
     flex-direction: column;
     background: #fff;
     position: absolute;
+    pointer-events: none;
     top: 60px;
     right: 0;
     width: 200px;
     padding: 1rem;
     display: none;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
   }
 
   .nav-links.active {
     display: flex;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
   }
 
   .nav-links li {
