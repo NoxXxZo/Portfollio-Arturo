@@ -193,4 +193,30 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Escape") closeLightbox();
     }
   });
+  // ===== Swipe solo en móviles =====
+  if (window.innerWidth <= 768) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    slider.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    slider.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+
+    function handleGesture() {
+      const swipeDistance = touchEndX - touchStartX;
+      if (swipeDistance > 50) {
+        showPrevSlide();
+      } else if (swipeDistance < -50) {
+        showNextSlide();
+      }
+    }
+  }
+
+  // ===== Iniciar =====
+  updateSliderPosition();
 });
