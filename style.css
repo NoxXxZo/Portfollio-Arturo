@@ -196,6 +196,19 @@ footer {
   .nav-links li {
     padding: 0.5rem 0;
   }
+  /*Clicable toda el area texto+espacio blanco*/
+  .nav-links a {
+    display: block; /* Hace que ocupe todo el ancho */
+    padding: 0.75rem 1rem; /* Más área clicable */
+    color: #333;
+    text-decoration: none;
+  }
+
+  .nav-links a:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+  }
+  /*fin clicable area entera*/
 }
 
 .project-image {
