@@ -194,27 +194,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   // ===== Swipe solo en móviles =====
+  // ===== Swipe solo en móviles (fix iOS) =====
   if (window.innerWidth <= 768) {
     let touchStartX = 0;
-    let touchEndX = 0;
+    let touchMoveX = 0;
 
-    slider.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].screenX;
+    // Evitar que las imágenes se arrastren en iOS
+    slides.forEach((img) => {
+      img.addEventListener("dragstart", (e) => e.preventDefault());
     });
 
-    slider.addEventListener("touchend", (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleGesture();
-    });
+    slider.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchMoveX = touchStartX;
+      },
+      { passive: true }
+    );
 
-    function handleGesture() {
-      const swipeDistance = touchEndX - touchStartX;
+    slider.addEventListener(
+      "touchmove",
+      (e) => {
+        touchMoveX = e.touches[0].clientX;
+      },
+      { passive: true }
+    );
+
+    slider.addEventListener("touchend", () => {
+      const swipeDistance = touchMoveX - touchStartX;
+
       if (swipeDistance > 50) {
         showPrevSlide();
       } else if (swipeDistance < -50) {
         showNextSlide();
       }
-    }
+    });
   }
 
   // ===== Iniciar =====
