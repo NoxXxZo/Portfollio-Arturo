@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentIndex = index;
       updateSliderPosition();
       updateDots();
+      resetAutoplay(); // Reiniciar autoplay al hacer clic en un punto
     });
     dotsContainer.appendChild(dot);
   });
@@ -88,8 +89,15 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSliderPosition();
   }
 
-  document.querySelector(".next").addEventListener("click", showNextSlide);
-  document.querySelector(".prev").addEventListener("click", showPrevSlide);
+  document.querySelector(".next").addEventListener("click", () => {
+    showNextSlide();
+    resetAutoplay(); // 🔹 reinicia autoplay
+  });
+
+  document.querySelector(".prev").addEventListener("click", () => {
+    showPrevSlide();
+    resetAutoplay(); // 🔹 reinicia autoplay
+  });
 
   // Automático cada 5 segundos
   let autoplayInterval;
@@ -196,44 +204,64 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   // ===== Swipe solo en móviles =====
-  // ===== Swipe solo en móviles (fix iOS) =====
+  // ===== Swipe solo en móviles (fix iOS mejorado) =====
   if (window.innerWidth <= 768) {
     let touchStartX = 0;
     let touchMoveX = 0;
+    let touchStartY = 0;
 
-    // Evitar que las imágenes se arrastren en iOS
+    const sliderArea = document.querySelector(".slider-container");
+
+    // Evitar arrastre de imágenes
     slides.forEach((img) => {
       img.addEventListener("dragstart", (e) => e.preventDefault());
     });
 
-    slider.addEventListener(
+    sliderArea.addEventListener(
       "touchstart",
       (e) => {
         touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
         touchMoveX = touchStartX;
       },
       { passive: true }
     );
 
-    slider.addEventListener(
+    sliderArea.addEventListener(
       "touchmove",
       (e) => {
-        touchMoveX = e.touches[0].clientX;
+        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+
+        // Solo prevenir scroll si el movimiento es más horizontal que vertical
+        if (dx > dy) {
+          e.preventDefault();
+          touchMoveX = e.touches[0].clientX;
+        }
       },
-      { passive: true }
+      { passive: false } // importante para poder usar preventDefault en iOS
     );
 
-    slider.addEventListener("touchend", () => {
+    sliderArea.addEventListener("touchend", () => {
       const swipeDistance = touchMoveX - touchStartX;
 
       if (swipeDistance > 50) {
         showPrevSlide();
+        resetAutoplay();
       } else if (swipeDistance < -50) {
         showNextSlide();
+        resetAutoplay();
       }
+
+      // Reset
+      touchStartX = 0;
+      touchMoveX = 0;
     });
   }
-
+  function resetAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+  }
   // ===== Iniciar =====
   updateSliderPosition();
 });
