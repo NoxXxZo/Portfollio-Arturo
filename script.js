@@ -210,12 +210,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightbox = document.getElementById("lightbox");
     let startXLightbox = 0;
     let endXLightbox = 0;
-
+    let isPinching = false;
+    //si es mas de 1 dedo no toma en cuenta el swipe
     lightbox.addEventListener("touchstart", (e) => {
+      if (e.touches.length > 1) {
+        // Más de un dedo → está haciendo zoom
+        isPinching = true;
+        return;
+      }
+      isPinching = false;
       startXLightbox = e.touches[0].clientX;
     });
 
     lightbox.addEventListener("touchend", (e) => {
+      if (isPinching) return; // Si estaba haciendo pinch, no hacer swipe
       endXLightbox = e.changedTouches[0].clientX;
       handleLightboxSwipe();
     });
@@ -226,18 +234,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (Math.abs(swipeDistance) > 50) {
         // distancia mínima para contar como swipe
         if (swipeDistance > 0) {
-          // Deslizó a la derecha → imagen anterior
+          // Derecha → imagen anterior
           showPrevSlide();
           showPrevLightboxImage();
         } else {
-          // Deslizó a la izquierda → imagen siguiente
+          // Izquierda → imagen siguiente
           showNextSlide();
           showNextLightboxImage();
         }
-        resetAutoplay(); // si quieres que reinicie autoplay
+        //resetAutoplay(); // si quieres que reinicie autoplay
       }
     }
   }
+
   //fin swipe lightbox moviles
 
   // ===== Swipe solo en móviles =====
