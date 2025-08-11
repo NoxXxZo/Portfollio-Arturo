@@ -127,6 +127,7 @@ header {
 /* Tarjetas de proyecto (base) */
 .grid .card {
   background: #fff;
+  text-decoration: none; /*quita subrayado*/
   border: 1px solid #eee;
   border-radius: 6px;
   overflow: hidden;
