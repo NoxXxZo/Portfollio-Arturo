@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Detalles del proyecto de diseño gráfico - Arturo Camacho"
+    />
+    <title>Proyecto Web 2 | Arturo Camacho</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo"><a href="../index.html">Arturo Camacho</a></div>
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="../index.html#home">Inicio</a></li>
+          <li><a href="../index.html#sobre-mi">Sobre mí</a></li>
+          <li><a href="../index.html#diseno">Diseño gráfico</a></li>
+          <li><a href="../index.html#fotografia">Fotografía</a></li>
+          <li><a href="../index.html#video">Video</a></li>
+          <li><a href="../index.html#web">Páginas web</a></li>
+          <li><a href="../index.html#apps">Apps</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="section container">
+      <h1>Space Love</h1>
+      <div class="slider-container">
+        <button class="prev">&#10094;</button>
+        <div class="slider">
+          <img
+            src="../assets/img/web/web2-1.webp"
+            alt="Imagen 1"
+            class="slide active"
+          />
+          <img
+            src="../assets/img/web/web2-2.webp"
+            alt="Imagen 2"
+            class="slide"
+          />
+          <img
+            src="../assets/img/web/web2-3.webp"
+            alt="Imagen 3"
+            class="slide"
+          />
+          <img
+            src="../assets/img/web/web2-4.webp"
+            alt="Imagen 4"
+            class="slide"
+          />
+        </div>
+        <button class="next">&#10095;</button>
+      </div>
+      <div class="dots-container"></div>
+
+      <div class="project-description">
+        <h2>Descripción del proyecto</h2>
+        <p>
+          Este proyecto consistió en la creación de un logotipo moderno y
+          minimalista para una marca emergente. Se trabajó en la identidad
+          visual completa, desde la elección de colores hasta la tipografía,
+          buscando transmitir profesionalismo y confianza.
+        </p>
+
+        <h3>Herramientas utilizadas:</h3>
+        <ul>
+          <li>Adobe Illustrator</li>
+          <li>Photoshop</li>
+        </ul>
+
+        <h3>Resultados:</h3>
+        <p>
+          El logo final ayudó a mejorar el reconocimiento de marca y fue
+          aplicado en tarjetas de presentación, redes sociales y sitio web
+          corporativo.
+        </p>
+
+        <a href="../index.html#web" class="btn">⬅ Volver al portafolio</a>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-contact">
+        <p>
+          📞 <a href="tel:+56966411859">+56 9 6641 1859 </a> | 📧
+          <a href="mailto:arturocamacho727@gmail.com"
+            >arturocamacho727@gmail.com</a
+          >
+        </p>
+        <p>© 2025 Arturo Camacho | Portafolio</p>
+      </div>
+    </footer>
+    <!-- Lightbox (ventana emergente de imagen) -->
+    <div id="lightbox" class="lightbox">
+      <span class="close">&times;</span>
+      <button class="lightbox-prev">&#10094;</button>
+      <img class="lightbox-content" id="lightbox-img" />
+      <button class="lightbox-next">&#10095;</button>
+    </div>
+    <script src="../script.js"></script>
+  </body>
+</html>
