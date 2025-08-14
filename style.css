@@ -562,3 +562,13 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+.link-text {
+  color: inherit; /* Usa el mismo color que el texto del párrafo */
+  text-decoration: none; /* Quita el subrayado */
+  font-weight: bold; /* Opcional: resalta el enlace */
+}
+
+.link-text:hover {
+  color: #007bff; /* Cambia a un azul al pasar el mouse */
+  text-decoration: underline; /* Opcional: vuelve a mostrar subrayado */
+}
